@@ -9,7 +9,7 @@ class Pizza (models.Model):
 
 class Topping (models.Model):
     pizza = models.ForeignKey(Pizza, on_delete=models.CASCADE)
-    name = models.TextField()
+    ingredients = models.TextField()
     
     def __str__(self) -> str:
-        return self.name
+        return self.ingredients
