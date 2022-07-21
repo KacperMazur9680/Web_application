@@ -1,0 +1,18 @@
+<!--Displaying all the orders with the dates that they were added-->
+{% extends "pizzas/base.html" %}
+
+{% block content %}
+
+<p>Todays orders:</p>
+
+<ul>
+    {% for order in orders %}
+      <li>
+        <a href="{% url 'pizzas:order' order.id %}">{{ order }}</a> - <a>{{ order.date_added|date:'M d, Y H:i' }}</a>
+      </li>
+    {% empty %}
+      <li>No orders yet todey.</li>
+    {% endfor %}
+</ul>
+
+{% endblock content %}
