@@ -1,0 +1,19 @@
+<!--Showing the ingredients of each ordered pizza-->
+{% extends 'pizzas/base.html' %}
+
+{% block content %}
+
+<p>Order: {{ order }}</p>
+
+<p>Toppings:</p>
+<ul>
+{% for topping in toppings %}
+  <li>
+   <p>{{ topping }}</p>
+  </li>
+{% empty %}
+  <li>This pizza has no toppings added yet.</li>
+{% endfor %}
+</ul>
+
+{% endblock content %}
