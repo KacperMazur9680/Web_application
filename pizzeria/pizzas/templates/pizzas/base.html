@@ -2,7 +2,14 @@
 
 <p>
     <a href="{% url 'pizzas:index' %}">Pizzeria </a> - 
-    <a href="{% url 'pizzas:orders' %}">Orders </a>
+    <a href="{% url 'pizzas:orders' %}">Orders </a> -
+    {% if employee.is_authenticated %}
+      Hello, {{ employee.username }}
+      <a href="{% url 'employees:logout' %}">Log out</a>
+    {% else %}
+      <a href="{% url 'employees:register' %}">Register</a> -
+      <a href="{% url 'employees:login' %}">Log in</a>
+    {% endif %}
 </p>
 
 {% block content %}{% endblock content %}
