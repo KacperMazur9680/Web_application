@@ -31,10 +31,11 @@ ALLOWED_HOSTS = []
 # Application definition
 
 INSTALLED_APPS = [
-    # My app:
+    # My apps:
     'pizzas',
+    'employees',
 
-    # Django
+    # Django:
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
