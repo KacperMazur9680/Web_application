@@ -5,7 +5,7 @@
 
 <p>Todays orders:</p>
 
-<ul>
+  <ul>
     {% for order in orders %}
       <li>
         <a href="{% url 'pizzas:order' order.id %}">{{ order }}</a> - <a>{{ order.date_added|date:'M d, Y H:i' }}</a>
@@ -13,6 +13,8 @@
     {% empty %}
       <li>No orders yet todey.</li>
     {% endfor %}
-</ul>
+  </ul>
+  
+  <a href="{% url 'pizzas:new_order' %}">Add a new order</a>
 
 {% endblock content %}

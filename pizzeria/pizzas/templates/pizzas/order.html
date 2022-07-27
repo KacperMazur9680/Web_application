@@ -6,6 +6,11 @@
 <p>Order: {{ order }}</p>
 
 <p>Toppings:</p>
+
+<p>
+  <a href="{% url 'pizzas:new_toppings' order.id %}">Add toppings</a>
+</p>
+
 <ul>
 {% for topping in toppings %}
   <li>
