@@ -1,0 +1,16 @@
+{% extends "pizzas/base.html" %}
+
+{% block content %}
+
+<p><a href="{% url 'pizzas:order' order.id %}">{{ order }}</a></p>
+
+<p>Edit toppings:</p>
+ <form action="{% url 'pizzas:edit_toppings' toppings.id %}" method='post'>
+
+{% csrf_token %}
+{{ form.as_p }}
+
+ <button name="submit">Save changes</button>
+</form>
+
+{% endblock content %}
