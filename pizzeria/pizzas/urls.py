@@ -19,7 +19,10 @@ urlpatterns = [
     # Page for new orders
     path('new_order/', views.new_order, name='new_order'),
 
-    # Page for addind ingridients
+    # Page for adding ingridients
     path('new_toppings/<int:order_id>/', views.new_toppings, name="new_toppings"),
+
+    # Page for editing toppings
+    path('edit_toppings/<int:topping_id>/', views.edit_toppings, name='edit_toppings')
 
 ]
