@@ -14,6 +14,7 @@ def orders(request):
     context = {'orders': orders}
     return render(request, 'pizzas/orders.html', context )
 
+@login_required
 def order(request, order_id):
     """Showing the details of each order"""
     order = Pizza.objects.get(id=order_id)
@@ -21,6 +22,7 @@ def order(request, order_id):
     context = {'order': order, 'toppings': toppings}
     return render(request, 'pizzas/order.html', context)
 
+@login_required
 def new_order(request):
     """Adding a new order"""
     if request.method != 'POST':
@@ -34,6 +36,7 @@ def new_order(request):
     context = {'form': form}
     return render(request, 'pizzas/new_order.html', context)
 
+@login_required
 def new_toppings(request, pizza_id):
     """Adding toppings to an order"""
     order = Pizza.objects.get(id=pizza_id)
@@ -51,6 +54,7 @@ def new_toppings(request, pizza_id):
     context = {'order': order, 'form': form}
     return render(request, 'pizzas/new_toppings.html', context)
 
+@login_required
 def edit_toppings(request, topping_id):
     """Editing the toppings of an order"""
     toppings = Topping.objects.get(id=topping_id)
