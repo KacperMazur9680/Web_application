@@ -1,5 +1,5 @@
 from django.shortcuts import redirect, render
-from .models import Pizza
+from .models import Pizza, Topping
 from .forms import Pizza_Form, Topping_Form
 
 def index(request):
@@ -49,3 +49,18 @@ def new_toppings(request, order_id):
     context = {'order': order, 'form': form}
     return render(request, 'pizzas/new_toppings.html', context)
 
+def edit_toppings(request, topping_id):
+    """Editing the toppings of an order"""
+    toppings = Topping.objects.get(id=topping_id)
+    order = toppings.pizza
+
+    if request.method != 'POST':
+        form = Topping_Form(instance=toppings)
+    else:
+        form = Topping_Form(instance=toppings, data=request.POST)
+        if form.is_valid():
+            form.save()
+            return redirect('pizzas:order', order_id=order.id)
+    
+    context = {'toppings': toppings, 'order': order, 'form': form}
+    return render(request, 'pizzas/edit_toppings.html', context)
