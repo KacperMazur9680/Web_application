@@ -1,15 +1,16 @@
 from django.db import models
 
 class Pizza (models.Model):
-    order = models.CharField(max_length=50)
+    order = models.CharField(max_length=50, default=1)
     date_added = models.DateTimeField(auto_now_add=True)
 
     def __str__(self) -> str:
         return self.order
 
 class Topping (models.Model):
-    pizza = models.ForeignKey(Pizza, on_delete=models.CASCADE)
-    ingredients = models.TextField(default=None)
+    pizza = models.ForeignKey(Pizza, on_delete=models.CASCADE, default=1)
+    ingredients = models.TextField(default=str())
+    date_added = models.DateTimeField(auto_now_add=True)
     
     def __str__(self) -> str:
         return self.ingredients
