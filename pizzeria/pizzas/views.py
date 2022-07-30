@@ -1,4 +1,5 @@
 from django.shortcuts import redirect, render
+from django.contrib.auth.decorators import login_required
 from .models import Pizza, Topping
 from .forms import Pizza_Form, Topping_Form
 
@@ -6,6 +7,7 @@ def index(request):
     """Home page for the Pizzeria"""
     return render(request, 'pizzas/index.html')
 
+@login_required
 def orders(request):
     """Page for orders"""
     orders = Pizza.objects.order_by('date_added')
@@ -32,9 +34,9 @@ def new_order(request):
     context = {'form': form}
     return render(request, 'pizzas/new_order.html', context)
 
-def new_toppings(request, order_id):
+def new_toppings(request, pizza_id):
     """Adding toppings to an order"""
-    order = Pizza.objects.get(id=order_id)
+    order = Pizza.objects.get(id=pizza_id)
 
     if request.method != 'POST':
         form = Topping_Form()
@@ -42,9 +44,9 @@ def new_toppings(request, order_id):
         form = Topping_Form(data=request.POST)
         if form.is_valid():
             new_toppings = form.save(commit=False)
-            new_toppings.order = order
+            new_toppings.pizza = order
             new_toppings.save()
-            return redirect('pizzas:order', order_id = order_id)
+            return redirect('pizzas:order', order_id = pizza_id)
 
     context = {'order': order, 'form': form}
     return render(request, 'pizzas/new_toppings.html', context)
