@@ -1,5 +1,7 @@
 from django.shortcuts import redirect, render
 from django.contrib.auth.decorators import login_required
+from django.http import Http404
+
 from .models import Pizza, Topping
 from .forms import Pizza_Form, Topping_Form
 
@@ -9,15 +11,18 @@ def index(request):
 
 @login_required
 def orders(request):
-    """Page for orders"""
-    orders = Pizza.objects.order_by('date_added')
+    """Page for orders, each employee will see only their orders"""
+    orders = Pizza.objects.filter(order_taker=request.user).order_by('date_added')
     context = {'orders': orders}
     return render(request, 'pizzas/orders.html', context )
 
 @login_required
 def order(request, order_id):
-    """Showing the details of each order"""
+    """Showing the loged in employee the details of hes orders"""
     order = Pizza.objects.get(id=order_id)
+    if order.order_taker != request.user:
+        raise Http404
+
     toppings = order.topping_set.all()
     context = {'order': order, 'toppings': toppings}
     return render(request, 'pizzas/order.html', context)
@@ -30,7 +35,9 @@ def new_order(request):
     else:
         form = Pizza_Form(data=request.POST)
         if form.is_valid():
-            form.save()
+            new_order = form.save(commit=False)
+            new_order.order_taker = request.user
+            new_order.save()
             return redirect('pizzas:orders')
     
     context = {'form': form}
@@ -59,6 +66,8 @@ def edit_toppings(request, topping_id):
     """Editing the toppings of an order"""
     toppings = Topping.objects.get(id=topping_id)
     order = toppings.pizza
+    if order.order_taker != request.user:
+        raise Http404
 
     if request.method != 'POST':
         form = Topping_Form(instance=toppings)
