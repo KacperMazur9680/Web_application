@@ -5,6 +5,10 @@ from django.http import Http404
 from .models import Pizza, Topping
 from .forms import Pizza_Form, Topping_Form
 
+def check_order_taker(order, request):
+    if order.order_taker != request.user:
+        raise Http404
+
 def index(request):
     """Home page for the Pizzeria"""
     return render(request, 'pizzas/index.html')
@@ -20,8 +24,7 @@ def orders(request):
 def order(request, order_id):
     """Showing the loged in employee the details of hes orders"""
     order = Pizza.objects.get(id=order_id)
-    if order.order_taker != request.user:
-        raise Http404
+    check_order_taker(order, request)
 
     toppings = order.topping_set.all()
     context = {'order': order, 'toppings': toppings}
@@ -66,8 +69,7 @@ def edit_toppings(request, topping_id):
     """Editing the toppings of an order"""
     toppings = Topping.objects.get(id=topping_id)
     order = toppings.pizza
-    if order.order_taker != request.user:
-        raise Http404
+    check_order_taker(order, request)
 
     if request.method != 'POST':
         form = Topping_Form(instance=toppings)
