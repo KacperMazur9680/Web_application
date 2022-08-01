@@ -6,6 +6,7 @@ from .models import Pizza, Topping
 from .forms import Pizza_Form, Topping_Form
 
 def check_order_taker(order, request):
+    """Checking if said order is associated with loged in employee"""
     if order.order_taker != request.user:
         raise Http404
 
@@ -50,6 +51,7 @@ def new_order(request):
 def new_toppings(request, pizza_id):
     """Adding toppings to an order"""
     order = Pizza.objects.get(id=pizza_id)
+    check_order_taker(order, request)
 
     if request.method != 'POST':
         form = Topping_Form()
