@@ -1,6 +1,15 @@
-<!--Child template-->
 {% extends "pizzas/base.html"%}
 
-{% block content %}
-<p>You can make orders by picking the pizza and the toppings all by yourself!</p>
-{% endblock content %}
+{% block page_header %}
+  <div class="jumbotron">
+    <h1 class="display-3">Pizzeria's orders</h1>
+    <p class="lead">Each order made, will be shown only to you.
+        You can add new toppings if a customer wants to change something
+        or you can correct yourself in case of a mistake.
+    </p>
+        
+    <a class="btn btn-lg btn-primary" href="{% url 'employees:register' %}"
+      role="button">Register &raquo;</a>
+  </div>
+
+{% endblock page_header %}
