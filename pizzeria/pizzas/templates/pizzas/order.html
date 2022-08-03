@@ -1,26 +1,30 @@
 <!--Showing the ingredients of each ordered pizza-->
 {% extends 'pizzas/base.html' %}
 
+{% block page_header %}
+  <h3>{{ order }}</h3>
+{% endblock page_header %}
+
 {% block content %}
 
 <p>Order: {{ order }}</p>
 
 <p>Toppings:</p>
 
-<p>
-  <a href="{% url 'pizzas:new_toppings' order.id %}">Add toppings</a>
-</p>
-
 <ul>
 {% for topping in toppings %}
-  <li>
-   <p>{{ topping }}</p>
-   <p>
-    <a href="{% url 'pizzas:edit_toppings' topping.id %}">Edit toppings</a>
-   </p>
-  </li>
+  <div class="card mb-3">
+    <h4 class="card-header">
+      {{ topping }}
+      <small><a href="{% url 'pizzas:edit_toppings' topping.id %}">
+        ~customize toppings</a></small>
+    </h4>
+  </div>
 {% empty %}
-  <li>This pizza has no toppings added yet.</li>
+  <li>
+    This pizza has no toppings added yet. 
+    <a href="{% url 'pizzas:new_toppings' order.id %}">Add toppings</a>
+  </li> 
 {% endfor %}
 </ul>
 
