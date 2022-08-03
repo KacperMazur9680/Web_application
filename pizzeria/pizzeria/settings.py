@@ -35,6 +35,9 @@ INSTALLED_APPS = [
     'pizzas',
     'employees',
 
+    # 3-rd party apps:
+    'bootstrap4',
+
     # Django:
     'django.contrib.admin',
     'django.contrib.auth',
