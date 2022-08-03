@@ -6,6 +6,7 @@ class Pizza_Form(forms.ModelForm):
         model = Pizza
         fields = ['order']
         labels = {'order': ''}
+        widgets = {'order': forms.Textarea(attrs={'rows': 1})}
     
 class Topping_Form(forms.ModelForm):
     class Meta:
