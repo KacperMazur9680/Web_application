@@ -1,4 +1,4 @@
-from django.shortcuts import redirect, render
+from django.shortcuts import redirect, render, get_object_or_404
 from django.contrib.auth.decorators import login_required
 from django.http import Http404
 
@@ -24,7 +24,7 @@ def orders(request):
 @login_required
 def order(request, order_id):
     """Showing the loged in employee the details of hes orders"""
-    order = Pizza.objects.get(id=order_id)
+    order = get_object_or_404(Pizza, id=order_id)
     check_order_taker(order, request)
 
     toppings = order.topping_set.all()
