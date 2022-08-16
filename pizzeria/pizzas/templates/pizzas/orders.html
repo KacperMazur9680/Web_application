@@ -13,7 +13,7 @@
         <a href="{% url 'pizzas:order' order.id %}">{{ order }}</a> - <a>{{ order.date_added|date:'M d, Y H:i' }}</a>
       </h3></li>
     {% empty %}
-      <li><h3>No orders yet todey.</h3></li>
+      <li><h3>No orders yet today.</h3></li>
     {% endfor %}
   </ul>
   
