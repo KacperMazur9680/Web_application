@@ -1,3 +1,4 @@
 p_env/
-__pycache__/
+pizzas/__pycache__/
+pizzeria/__pycache__/
 *.sqlite3
