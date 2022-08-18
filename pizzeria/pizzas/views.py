@@ -50,7 +50,7 @@ def new_order(request):
 @login_required
 def new_toppings(request, pizza_id):
     """Adding toppings to an order"""
-    order = Pizza.objects.get(id=pizza_id)
+    order = get_object_or_404(Pizza, id=pizza_id)
     check_order_taker(order, request)
 
     if request.method != 'POST':
@@ -69,7 +69,7 @@ def new_toppings(request, pizza_id):
 @login_required
 def edit_toppings(request, topping_id):
     """Editing the toppings of an order"""
-    toppings = Topping.objects.get(id=topping_id)
+    toppings = get_object_or_404(Topping, id=topping_id)
     order = toppings.pizza
     check_order_taker(order, request)
 
